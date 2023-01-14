@@ -1,25 +1,30 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Register from "./pages/Register";
-import Signin from "./pages/Signin";
 import AdminHoc from "./pages/Admin/Admin";
-import FirebaseProvider from "./context/FirebaseContext";
-import AdminSignup from "./pages/authentication/AdminSignup";
+import AuthProvider from "./context/AuthContext";
 import Home from "./pages/home";
+import { useState } from "react";
+import Navbar from "./component/common/Navbar";
+import ProtectedRout from "./component/protextedRout/ProtectedRout";
 function App() {
   return (
-    <FirebaseProvider>
+    <AuthProvider>
       <div style={{ padding: "0 20px" }}>
         <BrowserRouter>
+          <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/admin" element={<AdminHoc />} />
-            <Route path="/adminsignup" element={<AdminSignup />} />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRout>
+                  <AdminHoc />
+                </ProtectedRout>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </div>
-    </FirebaseProvider>
+    </AuthProvider>
   );
 }
 

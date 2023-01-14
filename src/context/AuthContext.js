@@ -1,9 +1,9 @@
 import React, { createContext, useEffect, useState } from "react";
 import { db } from "../Firebase/firebaseConfig";
 import { addDoc, collection, getDocs } from "firebase/firestore";
-export const FirebaseContext = createContext();
+export const AuthContext = createContext();
 
-function FirebaseProvider({ children }) {
+function AuthProvider({ children }) {
   const [users, setUsers] = useState([]);
   const userCollectionRef = collection(db, "products");
   // Get all products
@@ -20,10 +20,10 @@ function FirebaseProvider({ children }) {
   };
 
   return (
-    <FirebaseContext.Provider value={{ initialData }}>
+    <AuthContext.Provider value={{ initialData }}>
       {children}
-    </FirebaseContext.Provider>
+    </AuthContext.Provider>
   );
 }
 
-export default FirebaseProvider;
+export default AuthProvider;

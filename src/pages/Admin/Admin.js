@@ -20,9 +20,6 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
-import { db } from "../../Firebase/firebaseConfig";
-import { addDoc } from "firebase/firestore";
-import { Button } from "@mui/material";
 import Products from "./products/Products";
 
 const drawerWidth = 240;
