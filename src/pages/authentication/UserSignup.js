@@ -112,7 +112,6 @@ function UserSignup() {
         >
           <h3 style={{ padding: "0" }}>User Signup</h3>
         </div>
-
         <TextField
           required
           id="firtName"
@@ -167,6 +166,7 @@ function UserSignup() {
             setPassword(e.target.value);
           }}
         />
+
         <TextField
           required
           id="confirmPassword"
