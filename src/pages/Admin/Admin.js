@@ -21,6 +21,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Products from "./products/Products";
+import { useUserAuth } from "../../context/AuthContext";
 
 const drawerWidth = 240;
 
@@ -102,6 +103,10 @@ export default function MiniDrawer() {
   };
 
   const [menuData, setMenuData] = React.useState("dashboard");
+  const { logOut } = useUserAuth();
+  const logout = async () => {
+    await logOut();
+  };
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -200,6 +205,30 @@ export default function MiniDrawer() {
                 <InboxIcon />
               </ListItemIcon>
               <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText
+                onClick={logout}
+                primary="logout"
+                sx={{ opacity: open ? 1 : 0 }}
+              />
             </ListItemButton>
           </ListItem>
         </List>

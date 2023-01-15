@@ -2,6 +2,7 @@ import { TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { db, auth } from "../../Firebase/firebaseConfig";
+import { usecontext } from "react";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -10,6 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useUserAuth } from "../../context/AuthContext";
 function AdminSignup() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -18,6 +20,7 @@ function AdminSignup() {
   const [confirmPassword, setConirmPassword] = useState();
   const [successAlert, setSuccessAlert] = useState(false);
   const [user, setUser] = useState({});
+  const { signUp } = useUserAuth();
   let navigate = useNavigate();
   const resetFileds = () => {
     setFirstName("");
@@ -29,11 +32,7 @@ function AdminSignup() {
   const handleSubmit = async () => {
     if (password === confirmPassword) {
       try {
-        const user = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
+        await signUp(email, password);
         resetFileds();
         setSuccessAlert(true);
         toast.success("Registered Succesfully!!", {
@@ -67,13 +66,14 @@ function AdminSignup() {
       });
     }
   };
-  // signout***********************************************************
-  // const SignOut = async () => {
-  //     await signOut(auth)
-  // }
   return (
     <div
-      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        with: "100%",
+      }}
     >
       <ToastContainer
         position="top-right"
@@ -99,11 +99,9 @@ function AdminSignup() {
         pauseOnHover
         theme="light"
       />
-      <div
-        className="signup-box"
-        style={{ width: "50vw", padding: "30px", paddingTop: "0px" }}
-      >
-        <h3>Signup</h3>
+      <div className="signup-box" style={{ width: "100%", paddingTop: "0px" }}>
+
+        <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", padding: "0", height: "20px" }}><h3 style={{ padding: "0" }}>Admin Signup</h3></div>
 
         <TextField
           required
@@ -187,8 +185,6 @@ function AdminSignup() {
           Register
         </Button>
       </div>
-      {user?.email}
-      {/* <button onClick={SignOut}>signout</button> */}
     </div>
   );
 }

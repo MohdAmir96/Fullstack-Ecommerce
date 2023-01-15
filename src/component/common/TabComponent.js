@@ -8,7 +8,7 @@ import UserSignin from "../../pages/authentication/UserSignin";
 import AdminSignin from "../../pages/authentication/AdminSignin";
 import AdminSignup from "../../pages/authentication/AdminSignup";
 import UserSignup from "../../pages/authentication/UserSignup";
-
+import { useUserAuth } from "../../context/AuthContext";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -48,9 +48,10 @@ export default function BasicTabs() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  // control toggle b/w signin/signup page
+  const { adminSignupPage } = useUserAuth();
+  const { userSignupPage } = useUserAuth();
 
-  const [adminSignIn, setAdminSignIn] = React.useState(true);
-  const [userSignIn, setUserSignIn] = React.useState(true);
   return (
     <Box sx={{ width: "100%", padding: "0px" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider", padding: "0px" }}>
@@ -60,20 +61,16 @@ export default function BasicTabs() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab sx={{ width: "50%" }} label="User Signin" {...a11yProps(0)} />
-          <Tab sx={{ width: "50%" }} label="Admin Signin" {...a11yProps(1)} />
+          <Tab sx={{ width: "50%" }} label="User " {...a11yProps(0)} />
+          <Tab sx={{ width: "50%" }} label="Admin " {...a11yProps(1)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {userSignIn ? (
-          <UserSignin userSignIn={userSignIn} setuserSignIn={setUserSignIn} />
-        ) : (
-          <UserSignup />
-        )}
+        {userSignupPage ? <UserSignin /> : <UserSignup />}
       </TabPanel>
 
       <TabPanel value={value} index={1} sx={{ padding: "0px" }}>
-        <AdminSignin />
+        {adminSignupPage ? <AdminSignin /> : <AdminSignup />}
       </TabPanel>
     </Box>
   );

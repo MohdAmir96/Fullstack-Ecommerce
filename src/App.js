@@ -1,13 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AdminHoc from "./pages/Admin/Admin";
-import AuthProvider from "./context/AuthContext";
 import Home from "./pages/home";
 import { useState } from "react";
 import Navbar from "./component/common/Navbar";
 import ProtectedRout from "./component/protextedRout/ProtectedRout";
+import { UserAuthContextProvider } from "./context/AuthContext";
+import AdminSignup from "./pages/authentication/AdminSignup";
 function App() {
   return (
-    <AuthProvider>
+    <UserAuthContextProvider>
       <div style={{ padding: "0 20px" }}>
         <BrowserRouter>
           <Navbar />
@@ -21,10 +22,11 @@ function App() {
                 </ProtectedRout>
               }
             />
+            <Route path="/adminsignup" element={<AdminSignup />} />
           </Routes>
         </BrowserRouter>
       </div>
-    </AuthProvider>
+    </UserAuthContextProvider>
   );
 }
 

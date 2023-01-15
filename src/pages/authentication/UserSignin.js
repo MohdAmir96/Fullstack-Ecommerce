@@ -11,9 +11,11 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Divider from "@mui/material/Divider";
+import { useUserAuth } from "../../context/AuthContext";
 function UserSignin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState();
+  const { setUserSignupPage } = useUserAuth();
   const handleSubmit = () => {};
   return (
     <div
@@ -25,6 +27,18 @@ function UserSignin() {
       }}
     >
       <div className="signup-box" style={{ padding: "0" }}>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "0",
+            height: "20px",
+          }}
+        >
+          <h3 style={{ padding: "0" }}>User Signin</h3>
+        </div>
         <TextField
           required
           id="email"
@@ -75,13 +89,17 @@ function UserSignin() {
             marginTop: "20px",
           }}
         >
-          <Button
-            sx={{ color: "black" }}
-            onClick={handleSubmit}
-            variant="outlined"
-          >
-            Signup
-          </Button>
+          <span>
+            Did'nt have account??{" "}
+            <span
+              style={{ color: "blue", cursor: "pointer" }}
+              onClick={() => {
+                setUserSignupPage(false);
+              }}
+            >
+              Signup
+            </span>
+          </span>
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import { FaUserCircle } from "react-icons/fa";
 import "./Modal.css";
 import TabComponent from "../TabComponent";
+import { useUserAuth } from "../../../context/AuthContext";
 const style = {
   position: "absolute",
   top: "50%",
@@ -22,9 +23,10 @@ const style = {
 };
 
 export default function ModalComponent() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const { open } = useUserAuth();
+  const { setOpen } = useUserAuth();
+  const { handleClose } = useUserAuth();
+  const { handleOpen } = useUserAuth();
 
   return (
     <div>
