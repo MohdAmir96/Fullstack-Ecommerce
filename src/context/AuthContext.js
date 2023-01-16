@@ -7,7 +7,8 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { auth } from "../Firebase/firebaseConfig";
+import { db, auth } from "../Firebase/firebaseConfig";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 
 const userAuthContext = createContext();
 
@@ -36,6 +37,21 @@ export function UserAuthContextProvider({ children }) {
       unsubscribe();
     };
   }, []);
+  // Get All Products
+  const [products, setProducts] = useState([]);
+  const userCollectionRef = collection(db, "products");
+  useEffect(() => {
+    const getAllData = async () => {
+      try {
+        const data = await getDocs(userCollectionRef);
+        setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      } catch (e) {
+        console.log(e.message);
+      }
+    };
+    getAllData();
+  }, []);
+
   // Modal contorol
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -59,6 +75,7 @@ export function UserAuthContextProvider({ children }) {
         setAdminSignupPage,
         userSignupPage,
         setUserSignupPage,
+        products,
       }}
     >
       {children}

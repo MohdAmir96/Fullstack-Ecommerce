@@ -30,15 +30,15 @@ function Navbar(props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
+        SuiteUp!!
       </Typography>
       <Divider />
       <List>
         <ListItem>Home</ListItem>
+        <ListItem>Cart</ListItem>
         <ListItem>Contact</ListItem>
         <ListItem>
-          {" "}
-          <ModalComponent style={{ color: "red" }} />
+          <ModalComponent />
         </ListItem>
       </List>
     </Box>
@@ -66,7 +66,7 @@ function Navbar(props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
-            MUI
+            SuiteUp!!
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {/* <a href="/"><Button sx={{ color: "#fff" }} >Home</Button></a> */}

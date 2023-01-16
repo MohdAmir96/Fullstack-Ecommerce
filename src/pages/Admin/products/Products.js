@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { db } from "../../../Firebase/firebaseConfig";
+import { db, storage } from "../../../Firebase/firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { Button } from "@mui/material";
 import Grid from "@mui/material/Grid";
@@ -9,8 +9,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import "./Product.css";
 import Alert from "@mui/material/Alert";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { useUserAuth } from "../../../context/AuthContext";
 const Products = () => {
-  // Add products
   const [name, setName] = useState();
   const [isShowForm, setIsShowForm] = useState(false);
   // form data************************
@@ -18,18 +19,32 @@ const Products = () => {
   const [price, setPrice] = useState();
   const [category, setCategory] = useState("formal");
   const [image, setImage] = useState("");
+  const [imageURL, setImageURL] = useState("");
   const [shippingPrice, setShippingPrice] = useState();
   const [successAlert, setSuccessAlert] = useState(false);
 
   const userCollectionRef = collection(db, "products");
   const addProducts = async () => {
-    await addDoc(userCollectionRef, {
-      productDescription: desc,
-      productPrice: price,
-      productCategory: category,
-      productImage: image,
-      productShippingPrice: shippingPrice,
-    });
+    const imgRef = ref(storage, "imageURL");
+    uploadBytes(imgRef, image)
+      .then(() => {
+        getDownloadURL(imgRef).then((url) => {
+          setImageURL(url);
+          console.log("imageURL", imageURL);
+        });
+      })
+      .catch((e) => console.log(e.message));
+    try {
+      await addDoc(userCollectionRef, {
+        productDescription: desc,
+        productPrice: price,
+        productCategory: category,
+        productImage: imageURL,
+        productShippingPrice: shippingPrice,
+      });
+    } catch (e) {
+      console.log(e.message);
+    }
   };
   // **************************************************
   const handleAddProduct = () => {
@@ -54,23 +69,14 @@ const Products = () => {
     } else {
       alert("please fill all the fields!!");
     }
-    console.log(
-      desc,
-      " ",
-      price,
-      " ",
-      category,
-      " ",
-      image,
-      " ",
-      shippingPrice
-    );
   };
   // **************************
   const handleSelectCategory = (event) => {
     setCategory(event.target.value);
   };
-
+  // Get All Products
+  const { products } = useUserAuth();
+  console.log("products", products);
   return (
     <div
       style={{
@@ -164,7 +170,7 @@ const Products = () => {
             fullWidth
             className="select"
             required
-            // style={{ width: "60%" }}
+          // style={{ width: "60%" }}
           >
             <MenuItem value="">
               <em>None</em>
@@ -203,6 +209,7 @@ const Products = () => {
           />
         </Grid>
       ) : null}
+      {products && products.map(item => <div>{item.productCategory}</div>)}
     </div>
   );
 };

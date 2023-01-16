@@ -31,7 +31,14 @@ export default function ModalComponent() {
   return (
     <div>
       <Button onClick={handleOpen}>
-        <FaUserCircle style={{ scale: "1.5", color: "#fff" }} />
+        <FaUserCircle
+          style={{
+            scale: "1.7",
+            color: "#fff",
+            background: "black",
+            borderRadius: "50%",
+          }}
+        />
       </Button>
       <Modal
         open={open}

@@ -16,8 +16,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import { FiLogOut } from "react-icons/fi";
+import { FaProductHunt } from "react-icons/fa";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Products from "./products/Products";
@@ -146,32 +146,6 @@ export default function MiniDrawer() {
                 px: 2.5,
               }}
               onClick={() => {
-                setMenuData("dashboard");
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Dashboard"
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-              onClick={() => {
                 setMenuData("products");
               }}
             >
@@ -182,7 +156,7 @@ export default function MiniDrawer() {
                   justifyContent: "center",
                 }}
               >
-                <InboxIcon />
+                <FaProductHunt style={{ scale: "1.5" }} />
               </ListItemIcon>
               <ListItemText primary="Products" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
@@ -202,33 +176,9 @@ export default function MiniDrawer() {
                   justifyContent: "center",
                 }}
               >
-                <InboxIcon />
+                <FiLogOut onClick={logout} style={{ scale: "1.5" }} />
               </ListItemIcon>
-              <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText
-                onClick={logout}
-                primary="logout"
-                sx={{ opacity: open ? 1 : 0 }}
-              />
+              <ListItemText primary="logout" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
         </List>
