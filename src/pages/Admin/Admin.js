@@ -102,7 +102,7 @@ export default function MiniDrawer() {
     setOpen(false);
   };
 
-  const [menuData, setMenuData] = React.useState("dashboard");
+  const [menuData, setMenuData] = React.useState("products");
   const { logOut } = useUserAuth();
   const logout = async () => {
     await logOut();
@@ -183,7 +183,7 @@ export default function MiniDrawer() {
           </ListItem>
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, padding: "0 20px" }}>
         {menuData == "dashboard" && <Dashboard />}
         {menuData == "products" && <Products />}
       </Box>
